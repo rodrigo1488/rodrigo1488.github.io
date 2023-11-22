@@ -1,0 +1,91 @@
+body {
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans;
+    margin: 0;
+    /* padding: 0; */
+    min-height: 100vh;
+    width: 100%;
+}
+
+header {
+    position: relative;
+    height: 9rem;
+    width: 100%;
+    background-color: #B61827;
+    background-image: url("img/preto2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-transform: uppercase;
+
+}
+
+div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+table {
+
+    border-radius: 15px;
+    box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 60%);
+    text-transform: uppercase;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+
+td {
+    padding: 10px;
+}
+
+.entrada {
+    text-align: center;
+    width: 20%px;
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 13px;
+    border: 1px solid black;
+    box-shadow: 3px 3px rgba(128, 128, 128, 60%);
+}
+
+.botão_media {
+    cursor: pointer;
+    border: 1px solid white;
+    color: white;
+    width: 140px;
+    height: 30px;
+    border-radius: 15px;
+    margin-top: 35px;
+    text-transform: uppercase;
+    background-color: #B61827;
+    box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 60%);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+main {
+    padding: 60px;
+}
+
+#resultado {
+    margin: 30px;
+    font-weight: bold;
+    font-size: 20px;
+}
