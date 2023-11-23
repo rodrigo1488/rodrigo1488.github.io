@@ -20,7 +20,7 @@ function soma() {
         sprova = 0;
     }
     mf = (((pprova + sprova) / 2) * 6 + snota * 4) / 10 + participa;
-    mf_conv = mf.toFixed(2);
+    mf_conv = mf.toFixed(1);
     
     
 }
@@ -28,15 +28,12 @@ function soma() {
 
 function calculop2() {
     p1 = parseFloat(document.calcmedia.p1.value);
-    //p1 = 1.5;
     var n2 = parseFloat(document.calcmedia.n2.value);
-    //n2 = 1.8;
     var part = parseFloat(document.calcmedia.participa1.value);
-    //part = 0.5;
     var nprov = ((n2 * 4) / 10) + part;
     var nm = 6.0;
-    var ne = ((((nm - nprov) * 10) / 6) * 2) - p1;  
-    var ne_conv =ne.toFixed(2);
+    var ne = ((((nm - nprov) * 10) / 6) * 2) - p1+0.1;  
+    var ne_conv =ne.toFixed(1);
     if(ne_conv>0){
         exibe_p2(ne_conv);
     }else{
@@ -114,7 +111,7 @@ function toggleProva2Input(resposta) {
 function exibe_p2(ne_conv,ver_p2){
     var botao_p2 =document.getElementById('ver_p2')
     var resultado2 = document.getElementById('resultado2');
-        resultado.innerHTML = 'você precisa tirar '+ne_conv+' pontos na P2 para atingir a media final';
+        resultado.innerHTML = 'você precisa tirar '+ne_conv+' pontos na p2 para atingir a media final';
         resultado.style.color = "red";
         botao_p2.style.display = 'none';
 }
@@ -122,7 +119,7 @@ function exibe_p2(ne_conv,ver_p2){
 function aprovado(ne_conv,ver_p2){
     var botao_p2 =document.getElementById('ver_p2')
     var resultado2 = document.getElementById('resultado2');
-        resultado.innerHTML = 'Parabens! você precisa tirar 0 pontos na P2 para atingir a media final';
+        resultado.innerHTML = 'Parabens! você precisa tirar 0 pontos na p2 para atingir a media final';
         resultado.style.color = "green";
         botao_p2.style.display = 'none';
 }
