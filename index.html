@@ -34,8 +34,17 @@
                             <input class="entrada" placeholder="digite aqui" type="text" name="p1" id="prova1">
                         </td>
                     </tr>
-
-                    <tr>
+                    <tr id="verifica_p2">
+                        <td>
+                            <label for="button">Você já fez a (P2)?</label>
+                        </td>
+                        <td>
+                            <input type="button" value="sim" onclick="toggleProva2Input('sim')" class="check1"> 
+                            <input type="button" value="não" onclick="toggleProva2Input('não')" class="check2">
+                        </td>
+                    </tr>
+            
+                    <tr id="prova_02" style="display: none;">
                         <td>
                             <label for="prova2">prova 2 (p2)</label>
                         </td>
@@ -65,7 +74,9 @@
             </form>
         </div>
         <div id="resultado"></div>
+        <input type="button" value="ver nota nescessaria na p2" onclick="calculop2()" class="verp2" id="ver_p2" style="display: none;" >
         <div id="botaoContainer"></div>
+        <div id="resultado2"></div>
     </main>
     <script src="index.js"></script>
     <footer>
