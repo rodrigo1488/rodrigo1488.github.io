@@ -31,15 +31,16 @@ div {
 }
 
 table {
-
+    font-weight: bold;
     border-radius: 15px;
     box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 60%);
     text-transform: uppercase;
     display: flex;
-    text-align: center;
+    text-align: end;
     justify-content: center;
     align-items: center;
     margin: auto;
+
 }
 
 
@@ -117,6 +118,8 @@ main {
 
 
 .verp2{
+    font-weight: bold;
+    animation: pulse 2s infinite;
     margin:45px;
     cursor: pointer;
     border: 1px solid white;
@@ -131,3 +134,21 @@ main {
     }
 
 
+/* //animações// */
+
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+    50% {
+      transform: scale(1.2);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+  }
+  
+  
