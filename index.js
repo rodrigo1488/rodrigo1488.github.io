@@ -20,7 +20,7 @@ function soma() {
         sprova = 0;
     }
     mf = (((pprova + sprova) / 2) * 6 + snota * 4) / 10 + participa;
-    mf_conv = mf.toFixed(1);
+    mf_conv = mf.toFixed(2);
     
     
 }
