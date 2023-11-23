@@ -10,7 +10,7 @@ body {
 header {
     position: relative;
     height: 9rem;
-    width: 100%;
+    width:auto;
     background-color: #B61827;
     background-image: url("https://drive.google.com/uc?id=1c95hz-AXzzyWIgbvG3lJgdRmXpKQktzC");
     background-repeat: no-repeat;
@@ -71,13 +71,12 @@ td {
 }
 
 footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    position:relative;
+    width: auto;
     background-color: #333;
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 30px;
 }
 
 main {
@@ -89,3 +88,46 @@ main {
     font-weight: bold;
     font-size: 20px;
 }
+
+.check1{
+    color:white;
+    background:green;
+    border-radius:15px;
+    border:1px solid black;
+    padding:auto;
+    box-shadow: 3px 3px rgba(128, 128, 128, 60%);
+    margin-right:30px;
+    width: 40px;
+    height: 25px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.check2{
+    color:white;
+    background:red;
+    border-radius:15px;
+    border:1px solid black;
+    padding:auto;
+    box-shadow: 3px 3px rgba(128, 128, 128, 60%);
+    width: 40px;
+    height: 25px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+.verp2{
+    
+    cursor: pointer;
+    border: 1px solid white;
+    color: white;
+    width: 240px;
+    height: 30px;
+    border-radius: 15px;
+    margin-top: 35px;
+    text-transform: uppercase;
+    background-color:blue;
+    box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 60%);
+    }
+
+
