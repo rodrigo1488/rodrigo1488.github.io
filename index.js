@@ -8,6 +8,8 @@ var bot_calc = document.getElementById("bot_media");
 var tema_v
 var minp2
 
+window.onload = alert('ATENÇÃO! USAR "PONTO" AO INVES DE "VIRGULA" EM NOTAS COM MAIS DE UMA CASA DECIMAL')
+
 function soma() {
     tema_v = document.calcmedia.tema.value;
     pprova = parseFloat(document.calcmedia.p1.value);
@@ -112,7 +114,7 @@ function toggleProva2Input(resposta) {
 function exibe_p2(ne_conv,ver_p2){
     var botao_p2 =document.getElementById('ver_p2')
     var resultado2 = document.getElementById('resultado2');
-        resultado.innerHTML = 'você precisa tirar '+ne_conv+' pontos na P2 para atingir a media final';
+        resultado.innerHTML = 'você precisa tirar '+ne_conv+' pontos na p2 para atingir a media final';
         resultado.style.color = "red";
         botao_p2.style.display = 'none';
 }
@@ -120,7 +122,7 @@ function exibe_p2(ne_conv,ver_p2){
 function aprovado(ne_conv,ver_p2){
     var botao_p2 =document.getElementById('ver_p2')
     var resultado2 = document.getElementById('resultado2');
-        resultado.innerHTML = 'Parabens! você precisa tirar 0 pontos na P2 para atingir a media final';
+        resultado.innerHTML = 'Parabens! você precisa tirar 0 pontos na p2 para atingir a media final';
         resultado.style.color = "green";
         botao_p2.style.display = 'none';
 }
