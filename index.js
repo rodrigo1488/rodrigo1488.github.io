@@ -2,6 +2,7 @@ var pprova;
 var sprova;
 var snota;
 var participa;
+var resultado2;
 var mf;
 var mf_conv;
 var bot_calc = document.getElementById("bot_media");
@@ -75,7 +76,7 @@ function exibemf() {
         var resultado = document.getElementById('resultado');
         resultado.innerHTML = 'Sua média em ' + tema_v + ' é: ' + mf_conv + ' Parabéns! Você atingiu a média mínima.';
         resultado.style.color = "green";
-        vp2()
+        
         botaocalc();
     } else {
         bot_calc.style.visibility = "hidden";
