@@ -117,10 +117,16 @@
         alert("Erro \n Usuario ou senha incorretos");
       } else {
         alert("Login bem-sucedido!");
+        // Armazenar o ID do usuário no localStorage
+        localStorage.setItem('user_id', data.id);
+        localStorage.setItem('nome', data.nome);
+        localStorage.setItem('email', data.email);
         window.location.href = 'index.html';
+        console.log("Usuário armazenado:");
+        console.log(localStorage.getItem('user_id'));
+        console.log(localStorage.getItem('nome'));
+        console.log(localStorage.getItem('email'));
 
-
-        console.log(data);
       }
     });
 
