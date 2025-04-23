@@ -1,4 +1,4 @@
-
+const materiaSelecionada = JSON.parse(localStorage.getItem('materiaSelecionada'));
 var pprova;
 var sprova;
 var snota;
@@ -9,11 +9,12 @@ var mf_conv;
 var bot_calc = document.getElementById("bot_media");
 var tema_v
 var minp2
+var aprovado
 
-window.onload = alert('ATENÇÃO! USAR "PONTO" AO INVES DE "VIRGULA" EM NOTAS COM MAIS DE UMA CASA DECIMAL')
+
 
 function soma() {
-    tema_v = document.calcmedia.tema.value;
+    tema_v = materiaSelecionada?.materia;
     pprova = parseFloat(document.calcmedia.p1.value);
     sprova = parseFloat(document.calcmedia.p2.value);
     snota = parseFloat(document.calcmedia.n2.value);
@@ -46,6 +47,10 @@ function calculop2() {
     
   }
 
+  function mostrarBotaoSalvar() {
+    const botao = document.getElementById('botaoSalvar');
+    botao.style.display = 'block';
+}
 
 
 function botaocalc() {
@@ -77,8 +82,10 @@ function exibemf() {
         var resultado = document.getElementById('resultado');
         resultado.innerHTML = 'Sua média em ' + tema_v + ' é: ' + mf_conv + ' Parabéns! Você atingiu a média mínima.';
         resultado.style.color = "green";
+
         
-        botaocalc();
+        //botaocalc();
+        mostrarBotaoSalvar(); // Chama a função para mostrar o botão de salvar
     } else {
         bot_calc.style.visibility = "hidden";
         var falta = 6 - mf_conv;
@@ -86,7 +93,8 @@ function exibemf() {
         resultado.innerHTML = 'Sua média em ' + tema_v + ' é: ' + mf_conv + ' Você precisa de ' + falta.toFixed(2) + ' para atingir a média necessária.';
         resultado.style.color = "red";
         vp2()
-        botaocalc();
+       // botaocalc();
+        mostrarBotaoSalvar(); // Chama a função para mostrar o botão de salv
     }
 }
 function toggleProva2Input(resposta) {
@@ -114,6 +122,7 @@ function exibe_p2(ne_conv,ver_p2){
     var botao_p2 =document.getElementById('ver_p2')
     var resultado2 = document.getElementById('resultado2');
         resultado.innerHTML = 'você precisa tirar '+ne_conv+' pontos na p2 para atingir a media final';
+
         resultado.style.color = "red";
         botao_p2.style.display = 'none';
 }
@@ -121,7 +130,7 @@ function exibe_p2(ne_conv,ver_p2){
 function aprovado(ne_conv,ver_p2){
     var botao_p2 =document.getElementById('ver_p2')
     var resultado2 = document.getElementById('resultado2');
-        resultado.innerHTML = 'Parabens! você precisa tirar 0 pontos na p2 para atingir a media final';
+        resultado.innerHTML = 'Parabens! Voce foi aprovado em '+tema_v+' com a media de '+mf_conv+' pontos';
         resultado.style.color = "green";
         botao_p2.style.display = 'none';
 }
@@ -129,9 +138,11 @@ function aprovado(ne_conv,ver_p2){
 
 
 
-function insertData() {
+function insertData(ne_conv) {
     const SUPABASE_URL = 'https://rfosgikzezrmhzghjjwd.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmb3NnaWt6ZXpybWh6Z2hqandkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUzNjA5NTYsImV4cCI6MjA2MDkzNjk1Nn0.oRpEXqpBTTHLDewfkCFjR2oCr2qtzazeOvn_NGsG1w4';
+    
+    const id_materia = materiaSelecionada?.id;
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     const nota_p1 = pprova;
     const nota_p2 = sprova;
@@ -140,6 +151,8 @@ function insertData() {
     const materia = tema_v;
     const media_final = mf_conv;
     const id_aluno = localStorage.getItem('user_id');
+    const status_aprovado = (media_final >= 6) ? 'aprovado' : 'reprovado'; // Define o status de aprovação com base na média final
+    
 
     const data = {
         nota_p1: nota_p1,
@@ -148,19 +161,25 @@ function insertData() {
         participacao: participacao,
         materia: materia,
         media_final: media_final,
-        id_aluno: id_aluno
+        id_aluno: id_aluno,
+        id: id_materia,
+        aprovado: status_aprovado, // Adiciona o status de aprovação
+
     };
 
     supabase
         .from('materias')
-        .insert([data])
+        .upsert([data])
+        .eq('id', id_materia) // Adiciona a condição para atualizar o registro correto
         .then(({ data, error }) => {
             if (error) {
                 console.error('Erro ao inserir dados:', error);
             } else {
-                console.log('Dados inseridos com sucesso:', data);
+                
+                localStorage.removeItem('materiaSelecionada');
                 alert('Dados inseridos com sucesso!');
-                window.location.reload(); // Recarrega a página após a inserção
+
+                location.reload(); // Recarrega a página após a inserção
             }
             // Aqui você pode adicionar lógica adicional após a inserção, se necessário
         })

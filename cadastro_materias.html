@@ -1,14 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(120deg, #2c3e50, #3498db);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #ffffff;
+        margin-bottom: 30px;
+    }
+
+    form {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 40px;
+    }
+
+    label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+        margin-bottom: 15px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        border-color: #3498db;
+        outline: none;
+    }
+
+    input[type="submit"],
+    input[type="button"] {
+        padding: 12px;
+        background-color: #3498db;
+        color: #fff;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+        margin-top: 5px;
+    }
+
+    input[type="submit"]:hover,
+    input[type="button"]:hover {
+        background-color: #2980b9;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+    
+        background-color: #fff;
+        border-collapse: collapse;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+    }
+
+    th,
+    td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    thead {
+        background-color: #3498db;
+        color: white;
+    }
+
+    tbody tr:hover {
+        background-color: #f2f2f2;
+    }
+
+    @media (max-width: 768px) {
+        form {
+            width: 100%;
+        }
+
+        table {
+            max-width: 100%;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            padding: 6px 8px;
+            text-align: center;
+            max-width: 25%;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        /* Esconde colunas extras em dispositivos menores */
+        th:nth-child(2),
+        th:nth-child(3),
+        th:nth-child(4),
+        th:nth-child(5),
+        th:nth-child(6),
+        th:nth-child(7),
+        td:nth-child(2),
+        td:nth-child(3),
+        td:nth-child(4),
+        td:nth-child(5),
+        td:nth-child(6),
+        td:nth-child(7) {
+            display: none;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            font-size: 0.95rem;
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            font-size: 0.95rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        form {
+            padding: 1rem;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="submit"],
+        input[type="button"] {
+            font-size: 0.85rem;
+            padding: 10px;
+        }
+
+        th,
+        td {
+            padding: 8px 10px;
+        }
+    }
+</style>
+
 <body>
     <form id="cadastro_materias" name="cadastro_materias" method="post">
         <label for="materia">materia</label>
-        <input type="text" name="materia" id="materia"> 
+        <input type="text" name="materia" id="materia">
         <label for="semestre">semestre</label>
         <input type="text" name="semestre" id="semestre">
         <label for="ano">ano</label>
@@ -17,78 +189,89 @@
         <input type="button" value="Voltar" onclick="window.location.href='index.html'">
     </form>
 
-<table>
-    <thead>
-        <tr>
-            
-            <th>materia</th>
-            <th>semestre</th>
-            <th>ano</th>
-            <th>Nota P1</th>
-            <th>Nota P2</th>
-            <th>Nota N2</th>
-            <th>Participação</th>
-            <th>media Final</th>
-        </tr>
-    </thead>
-    <tbody id="materias"></tbody>
-</table>
+    <table>
+        <thead>
+            <tr>
+
+                <th>materia</th>
+                <th>semestre</th>
+                <th>ano</th>
+                <th>Nota P1</th>
+                <th>Nota P2</th>
+                <th>Nota N2</th>
+                <th>Participação</th>
+                <th>media Final</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody id="materias"></tbody>
+    </table>
 </body>
 <!-- Carregue a lib primeiro -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <!-- Só depois use o supabase -->
 <script>
-  const SUPABASE_URL = 'https://rfosgikzezrmhzghjjwd.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmb3NnaWt6ZXpybWh6Z2hqandkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUzNjA5NTYsImV4cCI6MjA2MDkzNjk1Nn0.oRpEXqpBTTHLDewfkCFjR2oCr2qtzazeOvn_NGsG1w4';
+    const SUPABASE_URL = 'https://rfosgikzezrmhzghjjwd.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmb3NnaWt6ZXpybWh6Z2hqandkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUzNjA5NTYsImV4cCI6MjA2MDkzNjk1Nn0.oRpEXqpBTTHLDewfkCFjR2oCr2qtzazeOvn_NGsG1w4';
+    // Supondo que materia.ano seja uma string de data (ex: "2023-04-22")
+    let ano = new Date(materia.ano);  // Converte a string para um objeto Date
+    let anoFormatado = ano.getFullYear();  // Pega o ano
 
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  document.getElementById('cadastro_materias').addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const materia = document.getElementById('materia').value;
-    const semestre = document.getElementById('semestre').value;
-    const ano = document.getElementById('ano').value;
-    const id_aluno = localStorage.getItem('user_id');
-    const {data,error} = await supabase
-        .from('materias')
-        .insert([{ materia, semestre, ano, id_aluno }]);
-    if (error) {
-        alert("Erro ao cadastrar: " + error.message);
-    } else {
-        alert("materia cadastrada com sucesso!");
-    }
-  })
 
-  async function listarMaterias() {
-    const id_aluno = localStorage.getItem('user_id');
-    const { data, error } = await supabase
-    .from('materias')
-        .select()
-        .eq('id_aluno', id_aluno)
-        .then(({ data, error }) => {
-            if (error) {
-                console.log(error);
-            } else {
-        const materias = data;
-        const tbody = document.getElementById('materias');
-        materias.forEach(materia => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    document.getElementById('cadastro_materias').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const materia = document.getElementById('materia').value;
+        const semestre = document.getElementById('semestre').value;
+        const ano = document.getElementById('ano').value;
+        const id_aluno = localStorage.getItem('user_id');
+        const { data, error } = await supabase
+            .from('materias')
+            .insert([{ materia, semestre, ano, id_aluno }]);
+        if (error) {
+            alert("Erro ao cadastrar: " + error.message);
+        } else {
+            alert("materia cadastrada com sucesso!");
+        }
+    })
+
+    async function listarMaterias() {
+        const id_aluno = localStorage.getItem('user_id');
+        const { data, error } = await supabase
+            .from('materias')
+            .select()
+            .eq('id_aluno', id_aluno)
+            .order('ano', { ascending: false })
+
+            .then(({ data, error }) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    const materias = data;
+                    const tbody = document.getElementById('materias');
+                    materias.forEach(materia => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
         
                 <td>${materia.materia}</td>
                 <td>${materia.semestre}</td>
-                <td>${materia.ano}</td>
+                <td>${new Date(materia.ano).getFullYear()}</td>
                 <td>${materia.nota_p1}</td>
                 <td>${materia.nota_p2}</td>
                 <td>${materia.nota_n2}</td>
                 <td>${materia.participacao}</td>
                 <td>${materia.media_final}</td>
+                <td>${materia.aprovado}</td>
+                
             `;
-            tbody.appendChild(row);
-        });
+                        tbody.appendChild(row);
+                    });
+                }
+            });
     }
-  });}
     listarMaterias();
 
 </script>
+
 </html>

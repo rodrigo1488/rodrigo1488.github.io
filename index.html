@@ -7,12 +7,10 @@
     <title>Calculo da media final</title>
     <link rel="stylesheet" href="index.css">
 </head>
-<header>
-
-</header>
 
 <body>
     <h1>CALCULE SUA MÉDIA</h1>
+    <div id="saudacao"></div>
 
     <main>
         <div id="mf">
@@ -20,7 +18,7 @@
                 <table>
                     <tr>
                         <td>
-                            <label for="tema">materia</label>
+                            <label for="tema">Diciplina</label>
                         </td>
                         <td>
                             <!-- <input placeholder="digite aqui" type="option" name="tema1" id="tema1"> -->
@@ -31,7 +29,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="prova1">prova 1 (p1)</label>
+                            <label for="prova1">prova 1 (N1)</label>
                         </td>
                         <td>
                             <input class="entrada" placeholder="digite aqui" type="text" name="p1" id="prova1">
@@ -49,7 +47,7 @@
             
                     <tr id="prova_02" style="display: none;">
                         <td>
-                            <label for="prova2">prova 2 (p2)</label>
+                            <label for="prova2">prova 2 (P2)</label>
                         </td>
                         <td>
                             <input class="entrada" placeholder="digite aqui" type="text" name="p2" id="prova2">
@@ -57,7 +55,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="nota2">nota 2 (n2)</label>
+                            <label for="nota2">Nota 2 (N2)</label>
                         </td>
                         <td>
                             <input class="entrada" placeholder="digite aqui" type="text" name="n2" id="nota2">
@@ -82,7 +80,8 @@
         <div id="resultado2"></div>
     </main>
     <div>
-        <input type="button" value="SALVAR DADOS" onclick="insertData()" class="voltar">
+        <input type="button" value="SALVAR DADOS" onclick="insertData()" class="voltar" id="botaoSalvar" style="display: none;">
+        <a href="cadastro_materias.html">incluir diciplinas</a>
     </div>
 
     <footer>
@@ -104,24 +103,32 @@ function carregarmaterias() {
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     const id_aluno = localStorage.getItem('user_id');
     supabase
-        .from('materias')
-        .select()
-        .eq('id_aluno', id_aluno)
-        .then(({ data, error }) => {
-            if (error) {
-                console.log(error);
-            } else {
-                const materias = data;
-                localStorage.setItem('materias', JSON.stringify(materias));
-                const select = document.getElementById('tema1');
-                materias.forEach(materia => {
-                    const option = document.createElement('option');
-                    option.value = materia.materia;
-                    option.textContent = materia.materia;
-                    select.appendChild(option);
-                });
-            }
-        });
+    .from('materias')
+    .select()
+    .eq('id_aluno', id_aluno)
+    .then(({ data, error }) => {
+        if (error) {
+            console.log(error);
+        } else {
+            const materias = data;
+            const select = document.getElementById('tema1');
+            
+            materias.forEach(materia => {
+                const option = document.createElement('option');
+                option.value =  JSON.stringify({ id: materia.id, materia: materia.materia }); // guarda ambos
+                option.textContent = materia.materia;
+                select.appendChild(option);
+            });
+
+            // Adiciona o event listener após popular o select
+            select.addEventListener('change', () => {
+                const materiaSelecionada = select.value;
+                localStorage.setItem('materiaSelecionada', materiaSelecionada);
+                console.log('Matéria armazenada no localStorage:', materiaSelecionada);
+            });
+        }
+    });
+
 }
 
 function Getstorage(){
@@ -131,7 +138,7 @@ function Getstorage(){
     } else {
         const nome = localStorage.getItem('nome');
         const email = localStorage.getItem('email');
-        document.getElementById('botaoContainer').innerHTML = `<p>Bem-vindo, ${nome} (${email})</p>`;
+        document.getElementById('saudacao').innerHTML = `<p>Bem-vindo, ${nome} </p>`;
     }
 
         
