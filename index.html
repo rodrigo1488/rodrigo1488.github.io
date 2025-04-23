@@ -78,7 +78,7 @@
         <div id="botaoContainer"></div>
         <div id="resultado2"></div>
     </main>
-    <script src="index.js"></script>
+
     <footer>
         <p>desenvolvido por: Rodrigo Gomes
             <br>
@@ -94,10 +94,14 @@ function Getstorage(){
     } else {
         const nome = localStorage.getItem('nome');
         const email = localStorage.getItem('email');
+        document.getElementById('botaoContainer').innerHTML = `<p>Bem-vindo, ${nome} (${email})</p>`;
+    }
+
         
 
 }
-}
+
     Getstorage();
     </script>
+        <script src="index.js"></script>
 </html>

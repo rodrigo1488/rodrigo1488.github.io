@@ -124,3 +124,46 @@ function aprovado(ne_conv,ver_p2){
         resultado.style.color = "green";
         botao_p2.style.display = 'none';
 }
+
+
+const SUPABASE_URL = 'https://rfosgikzezrmhzghjjwd.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmb3NnaWt6ZXpybWh6Z2hqandkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUzNjA5NTYsImV4cCI6MjA2MDkzNjk1Nn0.oRpEXqpBTTHLDewfkCFjR2oCr2qtzazeOvn_NGsG1w4';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function insertData() {
+    const nota_p1 = pprova;
+    const nota_p2 = sprova;
+    const nota_n2 = snota;
+    const participacao = participa;
+    const materia = tema_v;
+    const media_final = mf_conv;
+    const id_aluno = localStorage.getItem('id_aluno');
+
+    const data = {
+        nota_p1: nota_p1,
+        nota_p2: nota_p2,
+        nota_n2: nota_n2,
+        participacao: participacao,
+        materia: materia,
+        media_final: media_final,
+        id_aluno: id_aluno
+    };
+
+    supabase
+        .from('materias')
+        .insert([data])
+        .then(({ data, error }) => {
+            if (error) {
+                console.error('Erro ao inserir dados:', error);
+            } else {
+                console.log('Dados inseridos com sucesso:', data);
+            }
+            // Aqui você pode adicionar lógica adicional após a inserção, se necessário
+        })
+
+
+
+
+}
+
+

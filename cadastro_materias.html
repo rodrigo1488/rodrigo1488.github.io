@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="cadastro_materias" name="cadastro_materias" method="post">
+        <label for="materia">materia</label>
+        <input type="text" name="materia" id="materia"> 
+        <label for="semestre">semestre</label>
+        <input type="text" name="semestre" id="semestre">
+        <label for="ano">ano</label>
+        <input type="date" name="ano" id="ano">
+        <input type="submit" value="Cadastrar">
+        <input type="button" value="Voltar" onclick="window.location.href='index.html'">
+    </form>
+
+<table>
+    <thead>
+        <tr>
+            
+            <th>materia</th>
+            <th>semestre</th>
+            <th>ano</th>
+            <th>Nota P1</th>
+            <th>Nota P2</th>
+            <th>Nota N2</th>
+            <th>Participação</th>
+            <th>media Final</th>
+        </tr>
+    </thead>
+    <tbody id="materias"></tbody>
+</table>
+</body>
+<!-- Carregue a lib primeiro -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<!-- Só depois use o supabase -->
+<script>
+  const SUPABASE_URL = 'https://rfosgikzezrmhzghjjwd.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmb3NnaWt6ZXpybWh6Z2hqandkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUzNjA5NTYsImV4cCI6MjA2MDkzNjk1Nn0.oRpEXqpBTTHLDewfkCFjR2oCr2qtzazeOvn_NGsG1w4';
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  document.getElementById('cadastro_materias').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const materia = document.getElementById('materia').value;
+    const semestre = document.getElementById('semestre').value;
+    const ano = document.getElementById('ano').value;
+    const id_aluno = localStorage.getItem('user_id');
+    const {data,error} = await supabase
+        .from('materias')
+        .insert([{ materia, semestre, ano, id_aluno }]);
+    if (error) {
+        alert("Erro ao cadastrar: " + error.message);
+    } else {
+        alert("materia cadastrada com sucesso!");
+    }
+  })
+
+  async function listarMaterias() {
+    const { data, error } = await supabase.from('materias').select('*');
+    if (error) {
+        console.error('Erro ao listar materias:', error.message);
+    } else {
+        const materias = data;
+        const tbody = document.getElementById('materias');
+        materias.forEach(materia => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+        
+                <td>${materia.materia}</td>
+                <td>${materia.semestre}</td>
+                <td>${materia.ano}</td>
+                <td>${materia.nota_p1}</td>
+                <td>${materia.nota_p2}</td>
+                <td>${materia.nota_n2}</td>
+                <td>${materia.participacao}</td>
+                <td>${materia.media_final}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+  }
+    listarMaterias();
+
+</script>
+</html>
