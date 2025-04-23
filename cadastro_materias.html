@@ -60,10 +60,15 @@
   })
 
   async function listarMaterias() {
-    const { data, error } = await supabase.from('materias').select('*');
-    if (error) {
-        console.error('Erro ao listar materias:', error.message);
-    } else {
+    const id_aluno = localStorage.getItem('user_id');
+    const { data, error } = await supabase
+    .from('materias')
+        .select()
+        .eq('id_aluno', id_aluno)
+        .then(({ data, error }) => {
+            if (error) {
+                console.log(error);
+            } else {
         const materias = data;
         const tbody = document.getElementById('materias');
         materias.forEach(materia => {
@@ -82,7 +87,7 @@
             tbody.appendChild(row);
         });
     }
-  }
+  });}
     listarMaterias();
 
 </script>
