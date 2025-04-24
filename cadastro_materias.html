@@ -87,7 +87,7 @@
 
     table {
         width: 100%;
-    
+
         background-color: #fff;
         border-collapse: collapse;
         border-radius: 12px;
@@ -202,6 +202,7 @@
                 <th>Participação</th>
                 <th>media Final</th>
                 <th>status</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody id="materias"></tbody>
@@ -226,6 +227,12 @@
         const semestre = document.getElementById('semestre').value;
         const ano = document.getElementById('ano').value;
         const id_aluno = localStorage.getItem('user_id');
+        const nota_p1 = 0;
+        const nota_p2 = 0;
+        const nota_n2 = 0;
+        const participacao = 0;
+        const media_final = 0;
+        const aprovado = "-";
         const { data, error } = await supabase
             .from('materias')
             .insert([{ materia, semestre, ano, id_aluno }]);
@@ -233,6 +240,7 @@
             alert("Erro ao cadastrar: " + error.message);
         } else {
             alert("materia cadastrada com sucesso!");
+            window.location.reload();
         }
     })
 
@@ -249,26 +257,62 @@
                     console.log(error);
                 } else {
                     const materias = data;
-                    const tbody = document.getElementById('materias');
-                    materias.forEach(materia => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
+                    if (materias == null) {
+                        alert("Nenhuma materia encontrada");
+                    }
+                    else {
+                            const tbody = document.getElementById('materias');
+                            materias.forEach(materia => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
         
-                <td>${materia.materia}</td>
-                <td>${materia.semestre}</td>
-                <td>${new Date(materia.ano).getFullYear()}</td>
-                <td>${materia.nota_p1}</td>
-                <td>${materia.nota_p2}</td>
-                <td>${materia.nota_n2}</td>
-                <td>${materia.participacao}</td>
-                <td>${materia.media_final}</td>
-                <td>${materia.aprovado}</td>
-                
-            `;
-                        tbody.appendChild(row);
-                    });
-                }
-            });
+                                <td>${materia.materia}</td>
+                                <td>${materia.semestre}</td>
+                                <td>${new Date(materia.ano).getFullYear()}</td>
+                                <td>${materia.nota_p1}</td>
+                                <td>${materia.nota_p2}</td>
+                                <td>${materia.nota_n2}</td>
+                                <td>${materia.participacao}</td>
+                                <td>${materia.media_final}</td>
+                                <td>${materia.aprovado}</td>
+                                <td><input type="button" class="btn-danger" value="Excluir" onclick="excluirMateria(${materia.id})"></td>
+                                <td><input type="button" class="btn-danger" value="ver P2" onclick="verP2(${materia.id})"></td>
+                                
+                            `;
+                            tbody.appendChild(row);
+
+                        });
+
+                    }
+                    }
+                });
+    }
+
+    async function verP2(id) {
+        const { data, error } = await supabase
+            .from('materias')
+            .select()
+            .eq('id', id)
+            .single();
+        if (error) {
+            alert("Erro ao buscar: " + error.message);
+        } else {
+            alert("Até o momento você precisa tirar " + data.nota_p_p2 + " "+"pontos na P2 para atingir a media final");
+        }
+        
+    }
+
+    async function excluirMateria(id) {
+        const { data, error } = await supabase
+            .from('materias')
+            .delete()
+            .eq('id', id);
+        if (error) {
+            alert("Erro ao excluir: " + error.message);
+        } else {
+            alert("materia excluída com sucesso!");
+            window.location.reload();
+        }
     }
     listarMaterias();
 

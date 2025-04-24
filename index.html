@@ -97,56 +97,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script>
 
-function carregarmaterias() {
-    const SUPABASE_URL = 'https://rfosgikzezrmhzghjjwd.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmb3NnaWt6ZXpybWh6Z2hqandkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUzNjA5NTYsImV4cCI6MjA2MDkzNjk1Nn0.oRpEXqpBTTHLDewfkCFjR2oCr2qtzazeOvn_NGsG1w4';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    const id_aluno = localStorage.getItem('user_id');
-    supabase
-    .from('materias')
-    .select()
-    .eq('id_aluno', id_aluno)
-    .then(({ data, error }) => {
-        if (error) {
-            console.log(error);
-        } else {
-            const materias = data;
-            const select = document.getElementById('tema1');
-            
-            materias.forEach(materia => {
-                const option = document.createElement('option');
-                option.value =  JSON.stringify({ id: materia.id, materia: materia.materia }); // guarda ambos
-                option.textContent = materia.materia;
-                select.appendChild(option);
-            });
 
-            // Adiciona o event listener após popular o select
-            select.addEventListener('change', () => {
-                const materiaSelecionada = select.value;
-                localStorage.setItem('materiaSelecionada', materiaSelecionada);
-                console.log('Matéria armazenada no localStorage:', materiaSelecionada);
-            });
-        }
-    });
 
-}
 
-function Getstorage(){
-    if (localStorage.getItem('user_id') == null) {
-        alert("Você não está logado, faça o login para continuar.");
-        window.location.href = 'login.html';
-    } else {
-        const nome = localStorage.getItem('nome');
-        const email = localStorage.getItem('email');
-        document.getElementById('saudacao').innerHTML = `<p>Bem-vindo, ${nome} </p>`;
-    }
-
-        
-
-}
-
-    Getstorage();
-    carregarmaterias();
     </script>
         <script src="index.js"></script>
 </html>
