@@ -117,8 +117,8 @@
         }
 
         table {
-            max-width: 100%;
-            font-size: 0.9rem;
+            max-width: 80%;
+            font-size: 0.8rem;
         }
 
         th,
@@ -275,8 +275,8 @@
                                 <td>${materia.participacao}</td>
                                 <td>${materia.media_final}</td>
                                 <td>${materia.aprovado}</td>
-                                <td><input type="button" class="btn-danger" value="Excluir" onclick="excluirMateria(${materia.id})"></td>
-                                <td><input type="button" class="btn-danger" value="ver P2" onclick="verP2(${materia.id})"></td>
+                                <td><input type="button" class="btn-danger" value="Excluir" onclick="excluirMateria(${materia.id})"><input type="button" class="btn-danger" value="ver P2" onclick="verP2(${materia.id})"></td>
+                             
                                 
                             `;
                             tbody.appendChild(row);
