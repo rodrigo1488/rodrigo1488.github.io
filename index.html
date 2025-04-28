@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculo da media final</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <h1>CALCULE SUA MÉDIA</h1>
+    <div id="saudacao"></div>
+
+    <main>
+        <div id="mf">
+            <form name="calcmedia" action="" method="post">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="tema">Diciplina</label>
+                        </td>
+                        <td>
+                            <!-- <input placeholder="digite aqui" type="option" name="tema1" id="tema1"> -->
+                            <select name="tema1" id="tema1" class="entrada">
+                                <option value="">Selecione uma matéria</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="prova1">prova 1 (N1)</label>
+                        </td>
+                        <td>
+                            <input class="entrada" placeholder="digite aqui" type="text" name="p1" id="prova1">
+                        </td>
+                    </tr>
+                    <tr id="verifica_p2">
+                        <td>
+                            <label for="button">Você já fez a (P2)?</label>
+                        </td>
+                        <td>
+                            <input type="button" value="sim" onclick="toggleProva2Input('sim')" class="check1"> 
+                            <input type="button" value="não" onclick="toggleProva2Input('não')" class="check2">
+                        </td>
+                    </tr>
+            
+                    <tr id="prova_02" style="display: none;">
+                        <td>
+                            <label for="prova2">prova 2 (P2)</label>
+                        </td>
+                        <td>
+                            <input class="entrada" placeholder="digite aqui" type="text" name="p2" id="prova2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="nota2">Nota 2 (N2)</label>
+                        </td>
+                        <td>
+                            <input class="entrada" placeholder="digite aqui" type="text" name="n2" id="nota2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="part">participação</label>
+                        </td>
+                        <td>
+                            <input class="entrada" placeholder="digite aqui" type="text" name="participa1" id="part">
+                        </td>
+                    </tr>
+
+                </table>
+                <input id="bot_media" class="botão_media" type="button" value="calcular media" onclick="exibemf()">
+            </form>
+        </div>
+        <div id="resultado"></div>
+        <input type="button" value="ver nota nescessaria na p2" onclick="calculop2()" class="verp2" id="ver_p2" style="display: none;" >
+        <div id="botaoContainer"></div>
+        <div id="resultado2"></div>
+    </main>
+    <div>
+        <input type="button" value="SALVAR DADOS" onclick="insertData()" class="voltar" id="botaoSalvar" style="display: none;">
+        <a href="cadastro_materias.html">incluir diciplinas</a>
+    </div>
+
+    <footer>
+        <p>desenvolvido por: Rodrigo Gomes
+            <br>
+            atenção este calculo é ultilizado apenas pela universidade Mackenzie.
+        </p>
+    </footer>
+</body>
+
+
+  <!-- Carregue a lib primeiro -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+
+
+
+
+    </script>
+        <script src="index.js"></script>
+</html>
