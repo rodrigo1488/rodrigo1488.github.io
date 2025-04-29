@@ -303,17 +303,19 @@
     }
 
     async function excluirMateria(id) {
-        const { data, error } = await supabase
+     if (confirm("Tem certeza que deseja excluir essa materia?")) {
+        const { error } = await supabase
             .from('materias')
             .delete()
             .eq('id', id);
         if (error) {
             alert("Erro ao excluir: " + error.message);
         } else {
-            alert("materia excluída com sucesso!");
+            alert("Materia excluida com sucesso!");
             window.location.reload();
         }
     }
+}
     listarMaterias();
 
 </script>
