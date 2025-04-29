@@ -316,6 +316,23 @@
         }
     }
 }
+    // Função para verificar se o usuário está logado
+    function Getstorage(){
+    if (localStorage.getItem('user_id') == null) {
+        alert("Você não está logado, faça o login para continuar.");
+        window.location.href = 'login.html';
+    } else {
+        const nome = localStorage.getItem('nome');
+        const email = localStorage.getItem('email');
+        document.getElementById('saudacao').innerHTML = `<p>Bem-vindo, ${nome} </p>`;
+    }
+
+        
+
+}
+    
+    Getstorage();
+    
     listarMaterias();
 
 </script>
