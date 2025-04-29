@@ -178,16 +178,8 @@
 </style>
 
 <body>
-    <form id="cadastro_materias" name="cadastro_materias" method="post">
-        <label for="materia">materia</label>
-        <input type="text" name="materia" id="materia">
-        <label for="semestre">semestre</label>
-        <input type="text" name="semestre" id="semestre">
-        <label for="ano">ano</label>
-        <input type="date" name="ano" id="ano">
-        <input type="submit" value="Cadastrar">
-        <input type="button" value="Voltar" onclick="window.location.href='index.html'">
-    </form>
+    <input type="button" value="cadastrar materias" onclick=cadastrar()>
+
 
     <table>
         <thead>
@@ -218,6 +210,38 @@
     // Supondo que materia.ano seja uma string de data (ex: "2023-04-22")
     let ano = new Date(materia.ano);  // Converte a string para um objeto Date
     let anoFormatado = ano.getFullYear();  // Pega o ano
+
+    function cadastrar(){
+/*************  ✨ Windsurf Command ⭐  *************/
+        let modal = document.createElement('div');
+        modal.innerHTML = `
+        <div class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cadastrar Materia</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="cadastro_materias" name="cadastro_materias" method="post">
+                            <label for="materia">materia</label>
+                            <input type="text" name="materia" id="materia">
+                            <label for="semestre">semestre</label>
+                            <input type="text" name="semestre" id="semestre">
+                            <label for="ano">ano</label>
+                            <input type="date" name="ano" id="ano">
+                            <input type="submit" value="Cadastrar">
+                            <input type="button" value="Voltar" onclick="window.location.href='index.html'">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+        document.body.appendChild(modal);
+        new bootstrap.Modal(modal).show();
+/*******  da2a1bd5-76f0-4a3a-aa3e-321919221b49  *******/
+    }
 
 
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -316,22 +340,7 @@
         }
     }
 }
-    // Função para verificar se o usuário está logado
-    function Getstorage(){
-    if (localStorage.getItem('user_id') == null) {
-        alert("Você não está logado, faça o login para continuar.");
-        window.location.href = 'login.html';
-    } else {
-        const nome = localStorage.getItem('nome');
-        const email = localStorage.getItem('email');
-        document.getElementById('saudacao').innerHTML = `<p>Bem-vindo, ${nome} </p>`;
-    }
 
-        
-
-}
-    
-    Getstorage();
     
     listarMaterias();
 
